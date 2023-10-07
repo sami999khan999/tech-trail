@@ -20,14 +20,13 @@ body {
 }
 
 /* navbar */
-
 .nav-link {
   position: relative;
 }
 
 .nav-link::after {
   content: "";
-  height: 2px;
+  height: 1px;
   width: 0%;
   background-color: #f9fafb;
   position: absolute;
@@ -42,7 +41,6 @@ body {
 }
 
 /* slider */
-
 .slider {
   height: calc(100vh - 5rem);
   width: 500vw;
