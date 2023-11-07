@@ -5,12 +5,16 @@ import {
   addToCart,
   clearCart,
   decreaseCart,
+  getSubtotal,
   removeFromCart,
 } from "../features/products/cartSlice";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Cart = () => {
-  const { cartItems: data } = useSelector((state) => state.cart);
+  const { cartItems: data, cartTotalAmount: subTotal } = useSelector(
+    (state) => state.cart
+  );
 
   const dispatch = useDispatch();
 
@@ -30,14 +34,24 @@ const Cart = () => {
     dispatch(addToCart(product));
   };
 
+  useEffect(() => {
+    dispatch(getSubtotal());
+    console.log(subTotal);
+  }, [data, dispatch, subTotal]);
+
   return (
     <div className="cart-section container mx-auto py-10">
       <h2 className="section-title uppercase text-2xl font-bold utlity-font text-center mb-10">
-        {data.length > 0 ? "Your Cart" : "Cart is empty"}
+        {data.length > 0
+          ? `You have added ${data.length} item${data.length > 1 ? "s" : ""}`
+          : "Cart is empty"}
       </h2>
 
       {data.length === 0 && (
-        <div className="uppercase text-violet-500 font-medium text-center flex gap-2 items-center justify-center">
+        <div
+          if
+          className="uppercase text-violet-500 font-medium text-center flex gap-2 items-center justify-center"
+        >
           <Link to="/products" className="text-xl">
             Start Shopping Now
           </Link>
@@ -58,7 +72,10 @@ const Cart = () => {
             </div>
             <div className="products flex flex-col ">
               {data?.map((product) => (
-                <div className="prodcut grid grid-cols-5 gap-10 mt-10 border-b pb-5">
+                <div
+                  key={product.id}
+                  className="prodcut grid grid-cols-5 gap-10 mt-10 border-b pb-5"
+                >
                   <div className="left flex col-span-2 gap-5">
                     <img
                       src={product.image}
@@ -112,7 +129,9 @@ const Cart = () => {
             <div className="flex flex-col items-start gap-3">
               <div className="top flex w-full justify-between text-2xl font-medium">
                 <span className="text-sky-500">Subtotal</span>
-                <span className="text-rose-500">$200</span>
+                <span className="text-rose-500">
+                  {currencyFormatter(subTotal)}
+                </span>
               </div>
               <p className="text-gray-400">
                 Taxes ans shopping costs are calculated at the checkout
