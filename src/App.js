@@ -6,12 +6,14 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <>
       <div className="app min-h-screen bg-gray-50 text-gray-700 ">
         <Navbar />
+        <Toaster position="bottom-left" reverseOrder={true} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
